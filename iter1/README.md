@@ -42,14 +42,15 @@ Lets give a simple separate example. Say we have a SM with two states. OPEN and 
 What happens when we press OPEN_BUTTON? Surprise! The door opens. But this requires the state machine to be set to the OPEN state. Pressing CLOSE_BUTTON causes the state machine to change to the closed state, thus closing the door. But if you press CLOSE_BUTTON while the machine is in the CLOSED state, it stays in that state. the same for pressing OPEN_BUTTON while the machine is in the OPEN state.
 
 We define the following:
-Possible States: OPEN, CLOSED
-Initial State: CLOSED
-Input Signals: CLOSE_BUTTON, OPEN_BUTTON
-Transitions (signal, starting state, end state):
-    OPEN_BUTTON: OPEN->OPEN
-    OPEN_BUTTON: CLOSED->OPEN
-    CLOSE_BUTTON: OPEN->CLOSED
-    CLOSE_BUTTON: CLOSED->CLOSED
+
+    Possible States: OPEN, CLOSED
+    Initial State: CLOSED
+    Input Signals: CLOSE_BUTTON, OPEN_BUTTON
+    Transitions (signal, starting state, end state):
+        OPEN_BUTTON: OPEN->OPEN
+        OPEN_BUTTON: CLOSED->OPEN
+        CLOSE_BUTTON: OPEN->CLOSED
+        CLOSE_BUTTON: CLOSED->CLOSED
 
 (NOTE: If the transition starts and ends on the same state, for example, CLOSED->CLOSED, then nothing has changed. It did not leave the state and come back in some roundabout way.)
 
@@ -63,19 +64,20 @@ Before we can define the new machine, we need to describe the behavior we want t
 The difference now is that when the door is closed, pressing LOCK_BUTTON will cause it to become locked, pressing LOCK_BUTTON while the door is locked will cause it to become unlocked, pressing LOCK_BUTTON while the door is open will cause nothing to happen because the door can not be locked while open, and finally pressing OPEN_BUTTON while the door is locked will also do nothing because it can not be opened while locked.
 
 Lets look at our new definition for the state machine:
-Possible States: OPEN, CLOSED, LOCKED
-Initial State: CLOSED
-Input Signals: CLOSE_BUTTON, OPEN_BUTTON, LOCK_BUTTON
-Transitions (signal, starting state, end state):
-    OPEN_BUTTON: OPEN->OPEN
-    OPEN_BUTTON: CLOSED->OPEN
-    OPEN_BUTTON: LOCKED->LOCKED
-    CLOSE_BUTTON: OPEN->CLOSED
-    CLOSE_BUTTON: CLOSED->CLOSED
-    CLOSE_BUTTON: LOCKED->LOCKED
-    LOCK_BUTTON: LOCKED->CLOSE
-    LOCK_BUTTON: CLOSED->LOCKED
-    LOCK_BUTTON: OPEN->OPEN
+
+    Possible States: OPEN, CLOSED, LOCKED
+    Initial State: CLOSED
+    Input Signals: CLOSE_BUTTON, OPEN_BUTTON, LOCK_BUTTON
+    Transitions (signal, starting state, end state):
+        OPEN_BUTTON: OPEN->OPEN
+        OPEN_BUTTON: CLOSED->OPEN
+        OPEN_BUTTON: LOCKED->LOCKED
+        CLOSE_BUTTON: OPEN->CLOSED
+        CLOSE_BUTTON: CLOSED->CLOSED
+        CLOSE_BUTTON: LOCKED->LOCKED
+        LOCK_BUTTON: LOCKED->CLOSE
+        LOCK_BUTTON: CLOSED->LOCKED
+        LOCK_BUTTON: OPEN->OPEN
 
 
 Reading through this list of transitions you can see we correctly specify that you can not open a locked door without first unlocking it because there is no transition from the LOCKED state directly to the OPEN state.
