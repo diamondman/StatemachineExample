@@ -2,7 +2,7 @@ ITERATION 2 README
 ===================
 -------------------
 
-Last iteration we were able to build a fully functional program, that interacted with the user. Using State Machines and some planning, it wasn't all that difficult to get the basic functionality in the StateMachine classing running. On the plus side, the program works and there are no known bugs. Unfortunaely the code quality isn't particularly high, which leads to a few parts being hard to follow, and hard to add to. Lets see where we can do better.
+Last iteration we were able to build a fully functional program, that interacted with the user. Using State Machines and some planning, it wasn't all that difficult to get the basic functionality in the StateMachine classing running. On the plus side, the program works and there are no known bugs. Unfortunately the code quality isn't particularly high, which leads to a few parts being hard to follow, and hard to add to. Lets see where we can do better.
 
 CRITICISMS (statemachine.py)
 -------------------
@@ -52,7 +52,7 @@ The other transitions don't give us the same amount of return for our work, but 
 
 For the transition functions that need to add something to cur_code, we can give them a parameter we will use to pass along the key code to the function.
 
-These are akk the transition functions we should have after pulling the code out of do_event.
+These are all the transition functions we should have after pulling the code out of do_event.
     _transition_IDLE(self):
     _transition_1DIGIT(self, keycode):
     _transition_2DIGIT(self, keycode):
@@ -175,7 +175,7 @@ There is one more thing to do with this class before it is nice and clean. But i
     Validate input
     Draw changes to the UI
 
-We can get that simplier. If you read over the code in run, most of it are calls to self.win functions like addstr, border, refresh, or erase (all documented in the curses docs). These functions all have to do with drawing the UI, so lets make a display_ui function and put all this stuff in there.
+We can get that simpler. If you read over the code in run, most of it are calls to self.win functions like addstr, border, refresh, or erase (all documented in the curses docs). These functions all have to do with drawing the UI, so lets make a display_ui function and put all this stuff in there.
 
 Something I would like to point out before we move this code over is that all the lines we are about to move all use values stores in self, so we don't have to pass anything off to the display_ui function, at least not yet. Everything is stored in self so we can call those drawing methods anytime we want. Lets start by moving ALL of the curses calls (through self.win) into the new function, including the if statements that only have curses code inside of them.
 
@@ -215,7 +215,7 @@ We get the following:
         self.win.refresh()
              
 
-Take a moment to read over that code. You will find a lot of it is redundant. If we sort the calls based on what line number they draw to (the first number passed to addstr) we can get a clearer picture. We will also want to move that erase call to the top of the function so it clears the diaplay before we draw our text. The same with the border function. A little bit of thought to the order and we can get something like this:
+Take a moment to read over that code. You will find a lot of it is redundant. If we sort the calls based on what line number they draw to (the first number passed to addstr) we can get a clearer picture. We will also want to move that erase call to the top of the function so it clears the display before we draw our text. The same with the border function. A little bit of thought to the order and we can get something like this:
 
     def display_UI(self):
         self.win.erase()
