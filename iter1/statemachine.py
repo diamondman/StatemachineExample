@@ -5,7 +5,6 @@ class StateMachine(object):
         'ONEDIGIT',
         'TWODIGIT',
         'THREEDIGIT',
-        'FOURDIGIT',
         'CODEOK',
         'CODEBAD',
         ]
@@ -14,9 +13,8 @@ class StateMachine(object):
     ONEDIGIT = 1
     TWODIGIT = 2
     THREEDIGIT = 3
-    FOURDIGIT = 4
-    CODEOK = 5
-    CODEBAD = 6
+    CODEOK = 4
+    CODEBAD = 5
 
     E_TIMEOUT = 0
     E_KEYPRESS = 1
